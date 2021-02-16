@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const models = require('./models');
 const expressGraphQL = require('express-graphql');
@@ -7,8 +8,12 @@ const schema = require('./schema/schema');
 
 const app = express();
 
-// Replace with your mongoLab URI
-const MONGO_URI = '';
+const DB_USER = process.env.DB_USER
+const DB_NAME = process.env.DB_NAME
+const DB_PASSWORD = process.env.DB_PASSWORD
+
+// Replace with your mongoDB (Atlas) URI
+const MONGO_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.pmtbe.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }

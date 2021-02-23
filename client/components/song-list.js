@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+
 
 const query = gql`
   query GetSongs {
@@ -20,11 +22,16 @@ const SongList = ({ data }) => {
     )
 
   return(
-    <ul className='collection' >
-      {
-        data.loading ? <div>Loading</div> : renderList()
-      }
-    </ul>
+    <div>
+      <ul className='collection' >
+        {
+          data.loading ? <div>Loading</div> : renderList()
+        }
+      </ul>
+      <Link className='btn-floating btn-large red right' to='/songs/new'>
+        <i className='material-icons'>add</i>
+      </Link>
+    </div>
   )
 }
 

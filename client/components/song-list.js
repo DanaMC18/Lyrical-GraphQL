@@ -1,25 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import gql from 'graphql-tag';
+import { DELETE_SONG } from 'client/mutations/songs';
+import { GET_SONGS } from 'client/queries/songs';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
 
 
-const query = gql`
-  query GetSongs {
-    songs {
-      id
-      title
-    }
-  }
-`;
+const SongList = ({ data, mutate }) => {
 
-const SongList = ({ data }) => {
+  const onDelete = (id) =>
+    mutate({ variables: { id } })
+      .then(() => data.refetch())
+
 
   const renderList = () =>
     data.songs.map(song =>
-      <li className='collection-item' key={song.id}>{song.title}</li>
+      <li className='collection-item' key={song.id}>
+        {song.title}
+        <i className='material-icons' onClick={ () => onDelete(song.id) }>
+          delete
+        </i>
+      </li>
     )
+
 
   return(
     <div>
@@ -36,7 +39,10 @@ const SongList = ({ data }) => {
 }
 
 SongList.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  mutate: PropTypes.func.isRequired
 }
 
-export default graphql(query)(SongList);
+export default graphql(DELETE_SONG) (
+  graphql(GET_SONGS)(SongList)
+);

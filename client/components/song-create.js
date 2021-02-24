@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
+import { ADD_SONG } from 'client/mutations/songs';
+import { GET_SONGS } from 'client/queries/songs';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import { hashHistory, Link } from 'react-router';
 
-
-const ADD_SONG = gql`
-  mutation AddSong($title: String!) {
-    addSong(title: $title) {
-      id
-      title
-    }
-  }
-`;
 
 class SongCreate extends Component {
   constructor(props) {
@@ -23,7 +15,8 @@ class SongCreate extends Component {
     e.preventDefault();
 
     this.props.mutate({
-      variables: { title: this.state.title }
+      variables: { title: this.state.title },
+      refetchQueries: [{ query: GET_SONGS }]
     }).then(() => hashHistory.push('/'))
   }
 

@@ -16,10 +16,15 @@ const SongList = ({ data, mutate }) => {
   const renderList = () =>
     data.songs.map(song =>
       <li className='collection-item' key={song.id}>
-        {song.title}
+
+        <Link to={`songs/${song.id}`}>
+          {song.title}
+        </Link>
+        
         <i className='material-icons' onClick={ () => onDelete(song.id) }>
           delete
         </i>
+
       </li>
     )
 

@@ -4,6 +4,7 @@ import { GET_SONG } from 'client/queries/songs';
 import { graphql } from 'react-apollo';
 import { Link } from 'react-router';
 import LyricCreate from 'client/components/lyric-create';
+import LyricList from 'client/components/lyric-list';
 
 
 const SongDetail = ({ data }) => (
@@ -13,6 +14,7 @@ const SongDetail = ({ data }) => (
       !data.loading && (
         <div>
           <h3>{data.song.title}</h3>
+          <LyricList lyrics={ data.song.lyrics } />
           <LyricCreate songId={data.song.id} />
         </div>
       )

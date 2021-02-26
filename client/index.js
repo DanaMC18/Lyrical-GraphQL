@@ -10,7 +10,9 @@ import SongCreate from 'client/components/song-create';
 import SongDetail from 'client/components/song-detail';
 import SongList from 'client/components/song-list';
 
-const client = new ApolloClient({});
+const client = new ApolloClient({
+  dataIdFromObject: o => o.id // deprecated in favor of keyFields in typePolicies
+});
 
 // ApolloProvider wraps the entire react router
 const Root = () => {
